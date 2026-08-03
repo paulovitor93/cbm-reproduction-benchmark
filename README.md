@@ -12,7 +12,6 @@ This repository provides a unified benchmark framework for Concept Bottleneck Mo
 - Stochastic CBM (SCBM)
 
 ## Features
-
 - Unified implementation of six Concept Bottleneck Model architectures
 - Common ResNet-18 backbone for fair and reproducible comparisons
 - Support for five benchmark datasets, including the proposed GEOM-3-28
@@ -28,9 +27,9 @@ The benchmark supports five datasets. Due to licensing restrictions, the externa
 | Dataset | Download |
 |----------|----------|
 | CUB-200-2011 | [Official Website](https://data.caltech.edu/records/65de6-vp158/files/CUB_200_2011.tgz?download=1) |
-| AwA2 | [Official Website](https://cvml.ista.ac.at/AwA2/) |
-| Derm7pt | [Official Website](https://derm.cs.sfu.ca/) |
-| CelebA | [Official Website](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) |
+| AwA2 | [Official Website](https://cvml.ista.ac.at/AwA2/AwA2-data.zip) |
+| Derm7pt | [Official Website](https://derm.cs.sfu.ca/Download.html) |
+| CelebA | [Official Website](https://drive.google.com/file/d/0B7EVK8r0v71pZjFTYXZWM3FlRnM/view?usp=drive_link&resourcekey=0-dYn9z10tMJOBAkviAcfdyQ) |
 | GEOM-3-28 | Generated locally |
 
 ## Repository structure
@@ -46,15 +45,14 @@ scripts/                         Specific adjustments for CUB, AwA2 and CelebA
 
 ## Installation
 Clone the repository
-
 ```bash
-git clone https://github.com/paulovitor93/cbm-reproducibility-benchmark.git
-
-cd cbm-reproducibility-benchmark
+git clone https://github.com/paulovitor93/cbm-reproduction-benchmark.git
+```
+```bash
+cd cbm-reproduction-benchmark
 ```
 
 Create the environment
-
 ```bash
 pip install -r requirements.txt
 ```
@@ -66,7 +64,6 @@ Tested with
 
 ## Dataset Preparation
 > **Note:** The benchmark expects all datasets to be located under the `data/` directory following the structures shown below. Dataset preparation scripts only need to be executed once after downloading the original datasets.
-
 ```text
 data/
 ├── cub/
@@ -78,9 +75,7 @@ data/
 
 After downloading the dataset, organize the files as follows:
 ### CUB-200-2011
-The benchmark uses the train/validation/test split introduced by Koh et al. for Concept Bottleneck Models. The corresponding `class_attr_data_10` files should be downloaded separately.
-[Official Split CBM CUB dataset](https://data.caltech.edu/records/65de6-vp158/files/CUB_200_2011.tgz?download=1)
-
+The benchmark uses the train/validation/test split introduced by Koh et al. for Concept Bottleneck Models. The corresponding `class_attr_data_10` files are already included in this repository.
 ```text
 data/
 └── cub/
@@ -103,24 +98,84 @@ data/
 ```
 
 Generate the reduced list of 112 concepts used in the benchmark:
-
 ```bash
 python scripts/create_cub_112_attributes.py
 ```
 
-This script extracts the subset of 112 attributes used by the original Concept Bottleneck Model benchmark from the original list of 312 CUB attributes. :contentReference[oaicite:0]{index=0}
+This script extracts the subset of 112 attributes used by the original Concept Bottleneck Model benchmark from the original list of 312 CUB attributes. 
 
-The benchmark includes utility scripts to prepare some datasets before training. These scripts reproduce the preprocessing protocol adopted in the experiments.
+### Animals with Attributes 2 (AwA2)
+```text
+data/
+└── awa2/
+    ├── Animals_with_Attributes2/
+    │   ├── JPEGImages/
+    │   ├── classes.txt
+    │   ├── predicates.txt
+    │   └── ...
+    │
+    ├── train_val_idx.npy
+    └── test_idx.npy
+```
 
-| Dataset | Script | Purpose |
-|---------|--------|---------|
-| CUB | `scripts/create_cub_112_attributes.py` | Selects the 112 concepts used by the original CBM benchmark from the 312 available CUB attributes. |
-| AwA2 | `scripts/create_awa2_split.py` | Creates the stratified train/validation/test split used throughout the experiments. |
-| CelebA | `scripts/celeba_attributes_male_female_task.py` | Selects the facial attributes used as concepts and creates the binary Male/Female prediction task. |
-| CelebA | `scripts/create_celeba_20_subset.py` | Generates the reproducible 20% subset used in the experiments while preserving the class distribution of each split. |
-| GEOM-3-28 | `datasets/synthetic_generator/generate_dataset.py` | Generates the complete synthetic dataset, including images, concept annotations, metadata and dataset splits. |
-> **Note:** These scripts only need to be executed once after downloading the original datasets. The generated files (concept lists, subsets and dataset splits) are then reused by all training and evaluation scripts.
+Generate the benchmark train/test split:
+```bash
+python scripts/create_awa2_split.py
+```
 
+### Derm7pt
+```text
+data/
+└── derm7pt/
+    └── release_v0/
+        ├── images/
+        ├── meta/
+             ├── train_indexes.csv
+             ├── valid_indexes.csv
+             └── test_indexes.csv
+```
+No additional preprocessing is required.
+
+### CelebA
+The corresponding `list_attr_celeba.txt` and `list_eval_partition.txt`, files are already included in this repository.
+The file `OFFICIAL_WORK_celeba_20_percent_metadata.json` has the current informations used in this work.
+```text
+data/
+└── celeba/
+    ├── img_align_celeba/
+    ├── list_attr_celeba.txt
+    ├── list_eval_partition.txt
+    ├── celeba_gender_cbm_dataset.csv
+    ├── selected_concepts.csv
+    ├── removed_concepts.csv
+    ├── celeba_20_percent_train_idx.npy
+    ├── celeba_20_percent_val_idx.npy
+    ├── celeba_20_percent_test_idx.npy
+    └── ...
+```
+
+Prepare the dataset by selecting the concepts and creating the subset used in the experiments:
+```bash
+python scripts/celeba_attributes_male_female_task.py
+```
+```bash
+python scripts/create_celeba_20_subset.py
+```
+The first script creates the binary Male/Female prediction task and selects the concept annotations used by the benchmark. The second script generates the reproducible 20% subset while preserving the class distribution of the official train, validation and test partitions. 
+
+### GEOM-3-28
+Generate the synthetic dataset using
+```bash
+python datasets/synthetic_generator/generate_dataset.py
+```
+
+The script automatically
+
+- generates the scenes,
+- extracts the concepts,
+- creates the metadata,
+- creates the official train/validation/test split.
+  
 ## Running Experiments
 The framework allows configuring:
 
@@ -198,19 +253,36 @@ The pipeline automatically:
 
 The benchmark configuration is fully controlled through command-line arguments.
 
-### Example
+### Run the complete benchmark
 
+```bash
+python full_pipeline_cv.py --run_all
+```
+
+This command executes all implemented models on all supported datasets using the default benchmark configuration.
+
+### Run all models on one dataset
+
+```bash
+python full_pipeline_cv.py --datasets cub --models all
+```
+
+### Run one model on all datasets
+```bash
+python full_pipeline_cv.py --datasets all  --models cem_cv
+```
+
+### Run a custom benchmark
 ```bash
 python full_pipeline_cv.py --datasets cub awa2 celeba --models joint_cv cem_cv scbm_cv --epochs 100 --batch_size 32 --folds 5 --seeds 203040 532164
 ```
+
 ### Resume an interrupted benchmark
 ```bash
 python full_pipeline_cv.py --datasets cub --models scbm_cv --epochs 100 --folds 5 --start_fold 4 --seeds 203040
 ```
+
 The pipeline automatically resumes the cross-validation from the specified fold.
 
 ## Reproducibility
 All experiments are deterministic given the selected random seed. The benchmark stores the random seeds and benchmark configuration for every experiment, allowing the reported results to be reproduced.
-
-## Synthetic dataset generation (GEOM-3-28)
-This repository also contains the complete generator for the proposed **GEOM-3-28** synthetic dataset.
