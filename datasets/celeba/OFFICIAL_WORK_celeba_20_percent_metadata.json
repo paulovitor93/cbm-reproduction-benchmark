@@ -1,0 +1,8 @@
+{
+    "seed": 673011,
+    "subset_percentage": 0.2,
+    "train_size": 32554,
+    "val_size": 3973,
+    "test_size": 3992,
+    "total_size": 40519
+}
