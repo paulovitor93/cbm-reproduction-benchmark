@@ -41,6 +41,7 @@ def main():
     else:
         datasets = (ALL_DATASETS if "all" in args.datasets else args.datasets)
         models = (ALL_MODELS if "all" in args.models else args.models)
+        seeds = args.seeds
 
     folds = args.folds
     epochs = args.epochs

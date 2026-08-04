@@ -1,6 +1,6 @@
 from generator import RuleBasedSceneGenerator
 from extractor import ConceptExtractor
-from renderer_svg import SceneRendererSVG
+from renderer_png import SceneRenderer
 from dataset_builder import DatasetBuilder
 from split import DatasetSplitter
 from pathlib import Path
@@ -19,7 +19,7 @@ TEST_RATIO = 0.15
 
 # Create components
 generator = RuleBasedSceneGenerator()
-renderer = SceneRendererSVG()
+renderer = SceneRenderer()
 extractor = ConceptExtractor()
 
 # Generate dataset
