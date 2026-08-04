@@ -55,7 +55,6 @@ Create the environment
 ```bash
 pip install -r requirements.txt
 ```
-
 Tested with
 - Python 3.11
 - PyTorch 2.5.1
@@ -74,7 +73,7 @@ data/
 
 After downloading the dataset, organize the files as follows:
 ### CUB-200-2011
-The benchmark uses the train/validation/test split introduced by Koh et al. for Concept Bottleneck Models. The corresponding `class_attr_data_10` files are already included in this repository.
+The benchmark uses the train/validation/test split introduced by Koh et al. for Concept Bottleneck Models. The corresponding `class_attr_data_10` files and the `attributes.txt` are already included in this repository.
 ```text
 data/
 └── cub/
@@ -163,9 +162,9 @@ python scripts/create_celeba_20_subset.py
 The first script creates the binary Male/Female prediction task and selects the concept annotations used by the benchmark. The second script generates the reproducible 20% subset while preserving the class distribution of the official train, validation and test partitions. 
 
 ### GEOM-3-28
-Generate the synthetic dataset using
+If you did not download this dataset it is possible to generate it using
 ```bash
-python datasets/synthetic_generator/generate_dataset.py
+.......
 ```
 
 The script automatically
