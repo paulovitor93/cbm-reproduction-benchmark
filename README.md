@@ -7,7 +7,6 @@ This repository provides a unified benchmark framework for Concept Bottleneck Mo
 
 - Joint CBM
 - Sequential CBM
-- Independent CBM
 - Concept Embedding Model (CEM)
 - Probabilistic CBM (ProbCBM)
 - Stochastic CBM (SCBM)
