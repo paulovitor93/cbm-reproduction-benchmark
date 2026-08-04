@@ -191,7 +191,6 @@ The framework allows configuring:
 | `joint_cv` | Joint Concept Bottleneck Model |
 | `concepts_cv` | Concept predictor only |
 | `sequential_cv` | Sequential CBM |
-| `independent_cv` | Independent CBM |
 | `cem_cv` | Concept Embedding Model |
 | `prob_concepts_cv` | ProbCBM concept encoder |
 | `prob_classifier_cv` | ProbCBM classifier |
