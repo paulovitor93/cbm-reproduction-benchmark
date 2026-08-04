@@ -7,6 +7,7 @@ This repository provides a unified benchmark framework for Concept Bottleneck Mo
 
 - Joint CBM
 - Sequential CBM
+- Independent CBM
 - Concept Embedding Model (CEM)
 - Probabilistic CBM (ProbCBM)
 - Stochastic CBM (SCBM)
@@ -30,7 +31,7 @@ The benchmark supports five datasets. Due to licensing restrictions, the externa
 | AwA2 | [Official Website](https://cvml.ista.ac.at/AwA2/AwA2-data.zip) |
 | Derm7pt | [Official Website](https://derm.cs.sfu.ca/Download.html) |
 | CelebA | [Official Website](https://drive.google.com/file/d/0B7EVK8r0v71pZjFTYXZWM3FlRnM/view?usp=drive_link&resourcekey=0-dYn9z10tMJOBAkviAcfdyQ) |
-| GEOM-3-28 | Generated locally |
+| GEOM-3-28 | [Generated locally](https://doi.org/10.5281/zenodo.21777426)|
 
 ## Repository structure
 ```text
@@ -40,15 +41,13 @@ models/                          Model implementations
 training/                        Training procedures
 testing/                         Evaluation scripts
 transforms/                      Image preprocessing
-scripts/                         Specific adjustments for CUB, AwA2 and CelebA
+scripts/                         Dataset preparation utilities
 ```
 
 ## Installation
 Clone the repository
 ```bash
 git clone https://github.com/paulovitor93/cbm-reproduction-benchmark.git
-```
-```bash
 cd cbm-reproduction-benchmark
 ```
 
@@ -138,7 +137,7 @@ No additional preprocessing is required.
 
 ### CelebA
 The corresponding `list_attr_celeba.txt` and `list_eval_partition.txt`, files are already included in this repository.
-The file `OFFICIAL_WORK_celeba_20_percent_metadata.json` has the current informations used in this work.
+The file `OFFICIAL_WORK_celeba_20_percent_metadata.json` has the current configurations used in this work.
 ```text
 data/
 └── celeba/
@@ -211,15 +210,15 @@ The framework allows configuring:
 > **Note:** The repository provides loaders for all supported datasets. Due to licensing restrictions, CUB, AwA2, Derm7pt, and CelebA must be downloaded separately. The complete generator for the proposed GEOM-3-28 dataset is included and allows users to reproduce the synthetic dataset from scratch.
 
 ## Training and Evaluation Arguments
-| Argument | Description | Default |
-|-----------|-------------|---------|
-| `--mode` | Model to train or evaluate | required |
-| `--dataset` | Dataset | `cub` |
-| `--epochs` | Training epochs | `100` |
-| `--batch_size` | Batch size | `32` |
-| `--folds` | Cross-validation folds | `5` |
-| `--seed` | Random seed | `42` |
-| `--start_fold` | Resume CV from a given fold | `1` |
+| Argument | Description |
+|-----------|-------------|
+| `--mode` | Model to train or evaluate |
+| `--dataset` | Dataset | 
+| `--epochs` | Training epochs | 
+| `--batch_size` | Batch size | 
+| `--folds` | Cross-validation folds |
+| `--seed` | Random seed |
+| `--start_fold` | Resume CV from a given fold |
 
 ### Train a model
 ```bash
@@ -253,6 +252,7 @@ The pipeline automatically:
 
 The benchmark configuration is fully controlled through command-line arguments.
 
+The pipeline supports running either the complete benchmark or any user-defined subset of datasets, models and random seeds.
 ### Run the complete benchmark
 
 ```bash
