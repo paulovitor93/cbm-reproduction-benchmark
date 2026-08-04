@@ -12,7 +12,7 @@ This repository provides a unified benchmark framework for Concept Bottleneck Mo
 - Stochastic CBM (SCBM)
 
 ## Features
-- Unified implementation of six Concept Bottleneck Model architectures
+- Unified implementation of five Concept Bottleneck Model architectures
 - Common ResNet-18 backbone for fair and reproducible comparisons
 - Support for five benchmark datasets, including the proposed GEOM-3-28
 - Automatic five-fold cross-validation
@@ -34,6 +34,7 @@ The benchmark supports five datasets. Due to licensing restrictions, the externa
 
 ## Repository structure
 ```text
+data/                            Images and Metadata
 datasets/                        Dataset loaders
 datasets/synthetic_generator/    GEOM-3-28 dataset generator
 models/                          Model implementations
