@@ -40,6 +40,7 @@ def main(epochs=100, batch_size=32, SEED=42, train_dataset=None, val_dataset=Non
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
     best_model_path = os.path.join(RESULTS_DIR, f"prob_classifier_predictor_fold{fold_id}_seed{SEED}.pth")
+    concept_model_path = os.path.join(f"results/{dataset_name}/prob_concepts_cv/seed{SEED}/prob_concept_predictor_fold{fold_id}_seed{SEED}.pth")
 
     print(f"{dataset_name.upper()} PROBCBM CLASSIFIER TRAINING")
     print("Using device:", DEVICE)
@@ -68,7 +69,6 @@ def main(epochs=100, batch_size=32, SEED=42, train_dataset=None, val_dataset=Non
     backbone = ResNet18Backbone(pretrained=True)
 
     model = ProbCBM(backbone=backbone, feature_dim=512, num_concepts=train_dataset.num_concepts, num_classes=train_dataset.num_classes,).to(DEVICE)
-    concept_model_path = os.path.join(f"results/{dataset_name}/prob_concepts_cv/seed{SEED}/prob_concept_predictor_fold{fold_id}_seed{SEED}.pth")
     model.load_state_dict(torch.load(concept_model_path, map_location=DEVICE))
 
     # LOSS
