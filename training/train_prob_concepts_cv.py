@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
 from sklearn.metrics import (precision_score, recall_score, f1_score,)
 from datasets.cub_cv import CUBDataset
+from scripts.create_celeba_20_subset import SEED
 from transforms.transforms import get_transforms
 from models.backbone import ResNet18Backbone
 from models.prob_cbm import ProbCBM
@@ -41,13 +42,13 @@ def main(epochs=100, batch_size=32, SEED=42, train_dataset=None, val_dataset=Non
     RESULTS_DIR = (f"results/{dataset_name}/prob_concepts_cv/seed{SEED}")
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
+    best_model_path = os.path.join(RESULTS_DIR, f"prob_concept_predictor_fold{fold_id}_seed{SEED}.pth")
+
     print(f"{dataset_name.upper()} PROBCBM CONCEPT TRAINING")
     print("Using device:", DEVICE)
     print("Using seed:", SEED)
     print("Saving to:", RESULTS_DIR)
     print("Checkpoint:", best_model_path)
-
-    best_model_path = os.path.join(RESULTS_DIR, f"prob_concept_predictor_fold{fold_id}_seed{SEED}.pth")
 
     # DATASETS
     if dataset_name.lower() == "cub":

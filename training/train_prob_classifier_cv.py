@@ -39,14 +39,14 @@ def main(epochs=100, batch_size=32, SEED=42, train_dataset=None, val_dataset=Non
     RESULTS_DIR = (f"results/{dataset_name}/prob_classifier_cv/seed{SEED}")
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
+    best_model_path = os.path.join(RESULTS_DIR, f"prob_classifier_predictor_fold{fold_id}_seed{SEED}.pth")
+
     print(f"{dataset_name.upper()} PROBCBM CLASSIFIER TRAINING")
     print("Using device:", DEVICE)
     print("Using seed:", SEED)
     print("Saving to:", RESULTS_DIR)
     print("Concept model:", concept_model_path)
     print("Checkpoint:", best_model_path)
-
-    best_model_path = os.path.join(RESULTS_DIR, f"prob_classifier_predictor_fold{fold_id}_seed{SEED}.pth")
 
     # DATASETS
     if dataset_name.lower() == "cub":
