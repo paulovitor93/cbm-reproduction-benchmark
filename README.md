@@ -30,7 +30,7 @@ The benchmark supports five datasets. Due to licensing restrictions, the externa
 | AwA2 | [Official Website](https://cvml.ista.ac.at/AwA2/AwA2-data.zip) |
 | Derm7pt | [Official Website](https://derm.cs.sfu.ca/Download.html) |
 | CelebA | [Official Website](https://drive.google.com/file/d/0B7EVK8r0v71pZjFTYXZWM3FlRnM/view?usp=drive_link&resourcekey=0-dYn9z10tMJOBAkviAcfdyQ) |
-| GEOM-3-28 | [Generated locally](https://doi.org/10.5281/zenodo.21777426)|
+| GEOM-3-28 | [Zenodo](https://doi.org/10.5281/zenodo.21777426)|
 
 ## Repository structure
 ```text
@@ -52,6 +52,11 @@ cd cbm-reproduction-benchmark
 ```
 
 Create the environment
+```bash
+conda create -n cbm_benchmark python=3.11 -y
+conda activate cbm_benchmark
+```
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -164,7 +169,7 @@ The first script creates the binary Male/Female prediction task and selects the 
 ### GEOM-3-28
 If you did not download this dataset it is possible to generate it using
 ```bash
-.......
+python datasets/synthetic_dataset/generate_dataset.py
 ```
 
 The script automatically
