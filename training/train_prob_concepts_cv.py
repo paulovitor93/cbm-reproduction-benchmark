@@ -10,7 +10,6 @@ from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
 from sklearn.metrics import (precision_score, recall_score, f1_score,)
 from datasets.cub_cv import CUBDataset
-from scripts.create_celeba_20_subset import SEED
 from transforms.transforms import get_transforms
 from models.backbone import ResNet18Backbone
 from models.prob_cbm import ProbCBM
