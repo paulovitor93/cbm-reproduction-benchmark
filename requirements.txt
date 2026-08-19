@@ -1,11 +1,11 @@
-CairoSVG==2.9.0
 matplotlib==3.10.9
 numpy==2.0.1
 pandas==3.0.2
 Pillow==11.3.0
 PyYAML==6.0.3
+resvg_py==0.4.0
 scikit-learn==1.8.0
 svgwrite==1.4.3
+tqdm==4.67.1
 torch==2.5.1
 torchvision==0.20.1
-tqdm==4.67.1

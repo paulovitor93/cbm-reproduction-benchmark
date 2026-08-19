@@ -4,7 +4,7 @@ from tqdm import tqdm
 import random
 import numpy as np
 import json
-import cairosvg
+import resvg_py
 
 class DatasetBuilder:
     def __init__(self, generator, renderer, extractor):
@@ -53,12 +53,14 @@ class DatasetBuilder:
 
                 self.renderer.render(scene, svg_path,)
 
-                cairosvg.svg2png(
-                    url=str(svg_path), 
-                    write_to=str(png_path),
-                    output_width=self.renderer.image_size, 
-                    output_height=self.renderer.image_size,
+                png_bytes = resvg_py.svg_to_bytes(
+                    svg_path=str(svg_path),
+                    width=self.renderer.image_size,
+                    height=self.renderer.image_size,
                 )
+
+                with open(png_path, "wb") as f:
+                    f.write(bytes(png_bytes))
 
                 row = {
                     "image_id": image_id,
